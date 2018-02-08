@@ -6,7 +6,7 @@ package com.example.max.spaceinvadersandroid.DM;
 
 public abstract class GraphicObject {
 
-    private int x, y, width, height, xSpeed, ySpeed;
+    private int x, y, width, height, xSpeed, ySpeed, leftBound, rigthBound;
     private HealthStats healthStats;
 
     public GraphicObject(GraphicObjectBuilder graphicObjectBuilder){
@@ -16,11 +16,13 @@ public abstract class GraphicObject {
         this.height = graphicObjectBuilder.height;
         this.xSpeed = graphicObjectBuilder.xSpeed;
         this.ySpeed = graphicObjectBuilder.ySpeed;
+        this.rigthBound = graphicObjectBuilder.rightBound;
+        this.leftBound = graphicObjectBuilder.leftBound;
     }
 
     public static abstract class GraphicObjectBuilder {
 
-        private int x, y, width, height, xSpeed, ySpeed;
+        private int x, y, width, height, xSpeed, ySpeed, leftBound, rightBound;
 
         public GraphicObjectBuilder setX(int x){
             this.x = x;
@@ -53,6 +55,16 @@ public abstract class GraphicObject {
             if(ySpeed <= 0)
                 throw new IllegalArgumentException("No pueden existitr velocidades negativas de movimiento");
             this.ySpeed = ySpeed;
+            return this;
+        }
+
+        public GraphicObjectBuilder setRightBound(int yLimit){
+            this.rightBound = yLimit;
+            return this;
+        }
+
+        public GraphicObjectBuilder setLeftBound(int xLimit){
+            this.leftBound = xLimit;
             return this;
         }
 
@@ -92,6 +104,30 @@ public abstract class GraphicObject {
 
     public void moveRight(){this.x += xSpeed;}
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getLeftBound() {
+        return leftBound;
+    }
+
+    public void setLeftBound(int leftBound) {
+        this.leftBound = leftBound;
+    }
+
+    public int getRigthBound() {
+        return rigthBound;
+    }
+
+    public void setRigthBound(int rigthBound) {
+        this.rigthBound = rigthBound;
+    }
+
     public void increaseYSpeedBy(int ammounOfSpeed){
         if(ammounOfSpeed <= 0)
             throw  new IllegalArgumentException("No pueden existir velocidades nulas o negativas de movimiento");
@@ -119,5 +155,15 @@ public abstract class GraphicObject {
     public void setHealthStats (HealthStats healthStats){ this.healthStats = healthStats;}
 
     public HealthStats getHealthStats(){return this.healthStats;}
+
+    private boolean contains(GraphicObject object){
+        boolean crashesOnXAxis = this.x >= object.x && this.x <= object.x + object.width;
+        boolean crashesOnYAxis = this.y >= object.y && this.y <= object.y + object.height;
+        return crashesOnXAxis || crashesOnYAxis;
+    }
+
+    public boolean crashes(GraphicObject object){
+        return this.contains(object) || object.contains(this);
+    }
 
 }

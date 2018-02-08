@@ -19,25 +19,23 @@ public class PlayerShipController {
        this.player = player;
     }
 
-    public void moveShipUP(){
-        if(this.playerShip.getY() > 0)
+    public void moveShipUP(int height){
+        if(this.playerShip.getY() > height)
             this.playerShip.moveUP();
     }
 
-    public void moveShipDown(){
-        //TODO insert screen Height as max pixel for Y axis
-        if(this.playerShip.getY() < 1)
-            this.playerShip.moveUP();
+    public void moveShipDown(int height){
+        if(this.playerShip.getY() < height)
+            this.playerShip.moveDown();
     }
 
-    public void moveShipLeft(){
-        if(this.playerShip.getX() > 0)
+    public void moveShipLeft(int width){
+        if(this.playerShip.getX() > width)
             this.playerShip.moveLeft();
     }
 
-    public void moveShipRight(){
-        //TODO insert screen Width as max pixel for X axis
-        if(this.playerShip.getX() < 1)
+    public void moveShipRight(int width){
+        if(this.playerShip.getX() < width)
             this.playerShip.moveRight();
     }
 
@@ -52,5 +50,7 @@ public class PlayerShipController {
     public void decreasePlayerLife(){this.player.decreaseLifes();}
 
     public void reduceShipHealthBy(int health){this.playerShip.reduceHealthBy(health);}
+
+    public void increasePlayerScoreBy(int score){this.player.increaseScoreBy(score);}
 
 }

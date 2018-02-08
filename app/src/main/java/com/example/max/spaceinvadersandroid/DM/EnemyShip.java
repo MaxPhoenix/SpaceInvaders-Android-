@@ -54,6 +54,18 @@ public class EnemyShip extends GraphicObject {
 
     public static int getCurrentColumn() {return currentColumn;}
 
+    public static void increaseRowNumber(){
+        currentRow++;
+        if(currentRow > 4)
+            currentRow = 0;
+    }
+
+    public static void increaseColumnNumber(){
+        currentColumn++;
+        if(currentColumn > 4)
+            currentColumn =0;
+    }
+
     public int getHealth() {return health;}
 
     public void setHealth(int health) {this.health = health;}
@@ -61,4 +73,26 @@ public class EnemyShip extends GraphicObject {
     public void setShootCapability(Shooter shootCapability){ this.shootCapability = shootCapability;}
 
     public Shooter getShootCapability(){return this.shootCapability;}
+
+    public void setPosition(int row, int column){this.row = row; this.column = column;}
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public static void setCurrentRow(int currentRow) {
+        EnemyShip.currentRow = currentRow;
+    }
+
+    public static void setCurrentColumn(int currentColumn) {
+        EnemyShip.currentColumn = currentColumn;
+    }
+
+    public void setLastRow(boolean lastRow) {
+        this.lastRow = lastRow;
+    }
 }
