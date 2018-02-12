@@ -1,7 +1,9 @@
-package com.example.max.spaceinvadersandroid;
+package com.example.max.spaceinvadersandroid.UI;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
+
+import com.example.max.spaceinvadersandroid.UI.GamePanel;
 
 /**
  * Created by Max on 1/25/2018.

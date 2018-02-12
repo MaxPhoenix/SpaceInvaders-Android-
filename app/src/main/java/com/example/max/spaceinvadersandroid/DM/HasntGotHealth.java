@@ -9,4 +9,14 @@ public class HasntGotHealth implements HealthStats {
     public String displayHealth() {
         return "Hasn't got health";
     }
+
+    @Override
+    public void setHealth(int health) {
+
+    }
+
+    @Override
+    public int getHealth() {
+       return Integer.valueOf(null);
+    }
 }

@@ -6,8 +6,10 @@ package com.example.max.spaceinvadersandroid.DM;
 
 public abstract class GraphicObject {
 
-    private int x, y, width, height, xSpeed, ySpeed, leftBound, rigthBound;
-    private HealthStats healthStats;
+    protected int x, y, width, height, xSpeed, ySpeed, leftBound, rigthBound;
+    protected HealthStats healthStats;
+
+    public GraphicObject(){}
 
     public GraphicObject(GraphicObjectBuilder graphicObjectBuilder){
         this.x = graphicObjectBuilder.x;

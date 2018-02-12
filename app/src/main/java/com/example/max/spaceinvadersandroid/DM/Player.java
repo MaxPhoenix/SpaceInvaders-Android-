@@ -9,6 +9,8 @@ public class Player {
     private int score, lifes;
     private String name;
 
+    public Player(){}
+
     public Player(String name){
         this.name = name;
     }

@@ -6,4 +6,8 @@ package com.example.max.spaceinvadersandroid.DM;
 
 public interface HealthStats {
     public abstract String displayHealth();
+
+    public abstract void setHealth(int health);
+
+    public abstract int getHealth();
 }

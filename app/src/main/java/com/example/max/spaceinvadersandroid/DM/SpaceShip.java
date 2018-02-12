@@ -6,21 +6,16 @@ package com.example.max.spaceinvadersandroid.DM;
 
 public class SpaceShip extends GraphicObject {
 
-    private int health;
+
+    public SpaceShip(){}
 
     public SpaceShip(SpaceShipBuilder spaceShipBuilder) {
         super(spaceShipBuilder);
-        this.health = spaceShipBuilder.health;
+        this.setHealthStats(new HasHealth());
+        this.healthStats.setHealth(100);
     }
 
     public static class SpaceShipBuilder extends GraphicObjectBuilder{
-
-        private int health;
-
-        public SpaceShipBuilder setHealth(int health){
-            this.health = health;
-            return this;
-        }
 
         @Override
         public SpaceShip build() {return new SpaceShip(this);}
@@ -28,9 +23,9 @@ public class SpaceShip extends GraphicObject {
 
 
 
-    public int getHealth() {return health;}
+    public int getHealth() {return this.healthStats.getHealth();}
 
-    public void reduceHealthBy(int health) {this.health -= health;}
+    public void reduceHealthBy(int health) {this.healthStats.setHealth (- health);}
 
 
 }

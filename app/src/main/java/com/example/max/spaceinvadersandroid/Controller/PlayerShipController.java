@@ -1,8 +1,8 @@
 package com.example.max.spaceinvadersandroid.Controller;
 
+import com.example.max.spaceinvadersandroid.DM.HasHealth;
 import com.example.max.spaceinvadersandroid.DM.Player;
 import com.example.max.spaceinvadersandroid.DM.SpaceShip;
-import com.example.max.spaceinvadersandroid.UI.Handler;
 
 /**
  * Created by Max on 1/26/2018.
@@ -14,9 +14,9 @@ public class PlayerShipController {
     private SpaceShip playerShip;
     private Player player;
 
-    public PlayerShipController(SpaceShip spaceShip, Player player){
-       this.playerShip = spaceShip;
-       this.player = player;
+    public PlayerShipController(){
+        this.player = new Player();
+        this.playerShip = new SpaceShip();
     }
 
     public void moveShipUP(int height){
@@ -53,4 +53,34 @@ public class PlayerShipController {
 
     public void increasePlayerScoreBy(int score){this.player.increaseScoreBy(score);}
 
+    public void setShipCoordinates(int x, int y, int width, int height){
+        this.playerShip.setX(x);
+        this.playerShip.setY(y);
+        this.playerShip.setWidth(width);
+        this.playerShip.setHeight(height);
+        this.playerShip.setxSpeed(1);
+    }
+
+    public void setXAxisLimitBounds(int width){
+        this.playerShip.setRigthBound(width);
+        this.playerShip.setLeftBound(0);
+    }
+
+    public SpaceShip getPlayerShip() {
+        return playerShip;
+    }
+
+    public void setPlayerShip(SpaceShip playerShip) {
+        this.playerShip = playerShip;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setPlayerName(String name){this.player = new Player(name);}
 }
