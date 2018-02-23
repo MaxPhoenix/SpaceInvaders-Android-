@@ -20,22 +20,22 @@ public class PlayerShipController {
     }
 
     public void moveShipUP(int height){
-        if(this.playerShip.getY() > height)
-            this.playerShip.moveUP();
+        if(this.playerShip.getTop() > height)
+            this.playerShip.moveUp();
     }
 
     public void moveShipDown(int height){
-        if(this.playerShip.getY() < height)
+        if(this.playerShip.getBottom() < height)
             this.playerShip.moveDown();
     }
 
     public void moveShipLeft(int width){
-        if(this.playerShip.getX() > width)
+        if(this.playerShip.getLeft() > width)
             this.playerShip.moveLeft();
     }
 
     public void moveShipRight(int width){
-        if(this.playerShip.getX() < width)
+        if(this.playerShip.getRight() < width)
             this.playerShip.moveRight();
     }
 
@@ -54,11 +54,12 @@ public class PlayerShipController {
     public void increasePlayerScoreBy(int score){this.player.increaseScoreBy(score);}
 
     public void setShipCoordinates(int x, int y, int width, int height){
-        this.playerShip.setX(x);
-        this.playerShip.setY(y);
-        this.playerShip.setWidth(width);
-        this.playerShip.setHeight(height);
+        this.playerShip.setLeft(x);
+        this.playerShip.setTop(y);
+        this.playerShip.setRight(width);
+        this.playerShip.setBottom(height);
         this.playerShip.setxSpeed(1);
+        this.playerShip.getPoint().set((this.playerShip.getLeft() + this.playerShip.getRight()) /2,(this.playerShip.getTop() + this.playerShip.getBottom()) /2);
     }
 
     public void setXAxisLimitBounds(int width){

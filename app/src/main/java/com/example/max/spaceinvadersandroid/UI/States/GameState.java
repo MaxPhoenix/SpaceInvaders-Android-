@@ -23,7 +23,6 @@ public class GameState extends State{
     //Game objects handler
     private Handler objectsHandler;
     private DrawableSpaceShip drawableSpaceShip;
-    private Point point;
     //controllers
     private EnemyShipController enemyShipController;
     private PlayerShipController playerShipController;
@@ -38,8 +37,6 @@ public class GameState extends State{
         this.enemyShipController = new EnemyShipController();
         this.misileController = new MisileController();
         this.playerShipController = new PlayerShipController();
-
-        this.point = new Point();
 
         this.playerShipController.setShipCoordinates(
                 this.width/2,
@@ -69,7 +66,7 @@ public class GameState extends State{
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                this.point.set((int) event.getX(),(int) event.getY());
+                this.drawableSpaceShip.getEntity().getPoint().set((int) event.getX(),(int) event.getY());
         }
         return true;
     }

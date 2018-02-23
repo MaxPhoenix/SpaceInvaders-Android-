@@ -28,15 +28,15 @@ public class EnemyShipController {
 
     public void makeShipShooter(int row, int column){
         if(enemyShipsMatrix[row][column].isLastRow())
-            this.enemyShipsMatrix[row][column].setShootCapability(new ItShoots());
+            this.enemyShipsMatrix[row][column].setShootingCapability(new ItShoots());
     }
 
     public void moveEnemyShipsHorizontally(){
         for(int i = 0; i < this.enemyShipsList.size(); i++){
             EnemyShip enemy = enemyShipsList.get(i);
-            if(enemy.getX() <= enemy.getRigthBound())
+            if(enemy.getPoint().x + enemy.getRight()/2 <= enemy.getRigthBound())
                 enemy.moveRight();
-            else if(enemy.getX() > enemy.getLeftBound())
+            else if(enemy.getPoint().x - enemy.getRight()/2 > enemy.getLeftBound())
                 enemy.moveLeft();
         }
     }
@@ -56,10 +56,10 @@ public class EnemyShipController {
                         .setColumn(currentColumn)
                         .setRow(currentRow)
                         .setHealth(100)
-                        .setWidth(100)
-                        .setHeight(100)
-                        .setX(startX)
-                        .setY(startY)
+                        .setRight(100)
+                        .setBottom(100)
+                        .setLeft(startX)
+                        .setTop(startY)
                         .setLeftBound(leftBound)
                         .setRightBound(rightBound)
                         .setXSpeed(1)
@@ -86,7 +86,7 @@ public class EnemyShipController {
     public void moveShipsUp() {
         for (int i = 0; i < this.enemyShipsList.size(); i++) {
             EnemyShip enemy = enemyShipsList.get(i);
-            enemy.moveUP();
+            enemy.moveUp();
         }
     }
 

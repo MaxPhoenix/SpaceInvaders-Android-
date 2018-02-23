@@ -22,16 +22,16 @@ public class MisileController {
     }
 
     public void launchEnemyMisile(EnemyShip enemyShip){
-        int enemyShipXPos = enemyShip.getX();
-        int enemyShipYPos = enemyShip.getY();
-        int enemyShipWidth = enemyShip.getWitdh();
-        int enemyShipHeiht = enemyShip.getHeight();
+        int enemyShipXPos = enemyShip.getPoint().x;
+        int enemyShipYPos = enemyShip.getPoint().y;
+        int enemyShipWidth = enemyShip.getRight();
+        int enemyShipHeiht = enemyShip.getBottom();
         Misile enemyMisile = (Misile) new Misile.MisileBuilder()
                 .setAttackPower(1)
-                .setX(enemyShipXPos)
-                .setY(enemyShipYPos)
-                .setWidth(enemyShipWidth)
-                .setHeight(enemyShipHeiht)
+                .setLeft(enemyShipXPos)
+                .setTop(enemyShipYPos)
+                .setRight(enemyShipWidth)
+                .setBottom(enemyShipHeiht)
                 .setXSpeed(0)
                 .setYSpeed(1)
                 .build();
@@ -40,16 +40,16 @@ public class MisileController {
     }
 
     public void launchPlayerMisile(SpaceShip spaceShip){
-        int spaceShipXPos = spaceShip.getX();
-        int spaceShipYPos = spaceShip.getY();
-        int spaceShipWidth = spaceShip.getWitdh();
-        int spaceShipHeiht = spaceShip.getHeight();
+        int spaceShipXPos = spaceShip.getPoint().x;
+        int spaceShipYPos = spaceShip.getPoint().y;
+        int spaceShipWidth = spaceShip.getRight();
+        int spaceShipHeiht = spaceShip.getBottom();
         Misile spaceShipMisile = (Misile) new Misile.MisileBuilder()
                 .setAttackPower(1)
-                .setX(spaceShipXPos)
-                .setY(spaceShipYPos)
-                .setWidth(spaceShipWidth)
-                .setHeight(spaceShipHeiht)
+                .setLeft(spaceShipXPos)
+                .setRight(spaceShipYPos)
+                .setRight(spaceShipWidth)
+                .setBottom(spaceShipHeiht)
                 .setXSpeed(0)
                 .setYSpeed(1)
                 .build();
@@ -100,7 +100,7 @@ public class MisileController {
 
     public void movePlayerBullets(){
         for(int i = 0; i < playerMisiles.size(); i++)
-            playerMisiles.get(i).moveUP();
+            playerMisiles.get(i).moveUp();
     }
 
     public ArrayList<Misile> getPlayerBullets(){return this.playerMisiles;}

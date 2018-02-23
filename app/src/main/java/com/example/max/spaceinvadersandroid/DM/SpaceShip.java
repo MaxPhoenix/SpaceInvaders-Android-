@@ -13,6 +13,7 @@ public class SpaceShip extends GraphicObject {
         super(spaceShipBuilder);
         this.setHealthStats(new HasHealth());
         this.healthStats.setHealth(100);
+        this.shootingCapability = new ItShoots();
     }
 
     public static class SpaceShipBuilder extends GraphicObjectBuilder{

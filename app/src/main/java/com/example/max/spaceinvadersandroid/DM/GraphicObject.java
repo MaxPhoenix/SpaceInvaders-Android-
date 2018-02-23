@@ -1,48 +1,55 @@
 package com.example.max.spaceinvadersandroid.DM;
 
+import android.graphics.Point;
+
 /**
  * Created by Max on 1/26/2018.
  */
 
 public abstract class GraphicObject {
 
-    protected int x, y, width, height, xSpeed, ySpeed, leftBound, rigthBound;
+    protected int left, top, right, bottom, xSpeed, ySpeed, leftBound, rigthBound;
     protected HealthStats healthStats;
+    protected Shooter shootingCapability;
+    protected Point point;
 
-    public GraphicObject(){}
+    public GraphicObject(){
+        this.point = new Point();
+    }
 
     public GraphicObject(GraphicObjectBuilder graphicObjectBuilder){
-        this.x = graphicObjectBuilder.x;
-        this.y = graphicObjectBuilder.y;
-        this.width = graphicObjectBuilder.width;
-        this.height = graphicObjectBuilder.height;
+        this.left = graphicObjectBuilder.left;
+        this.top = graphicObjectBuilder.top;
+        this.right = graphicObjectBuilder.right;
+        this.bottom = graphicObjectBuilder.bottom;
         this.xSpeed = graphicObjectBuilder.xSpeed;
         this.ySpeed = graphicObjectBuilder.ySpeed;
         this.rigthBound = graphicObjectBuilder.rightBound;
         this.leftBound = graphicObjectBuilder.leftBound;
+        this.point = new Point((this.left + this.right) /2,(this.top + this.bottom) /2);
     }
 
     public static abstract class GraphicObjectBuilder {
 
-        private int x, y, width, height, xSpeed, ySpeed, leftBound, rightBound;
+        private int left, top, right, bottom, xSpeed, ySpeed, leftBound, rightBound;
 
-        public GraphicObjectBuilder setX(int x){
-            this.x = x;
+        public GraphicObjectBuilder setLeft(int x){
+            this.left = x;
             return this;
         }
 
-        public GraphicObjectBuilder setY(int y){
-            this.y = y;
+        public GraphicObjectBuilder setTop(int y){
+            this.top = y;
             return this;
         }
 
-        public GraphicObjectBuilder setWidth(int witdh){
-            this.width = witdh;
+        public GraphicObjectBuilder setRight(int witdh){
+            this.right = witdh;
             return this;
         }
 
-        public GraphicObjectBuilder setHeight(int height){
-            this.height = height;
+        public GraphicObjectBuilder setBottom(int height){
+            this.bottom = height;
             return this;
         }
 
@@ -74,21 +81,6 @@ public abstract class GraphicObject {
 
     }
 
-    public int getX() {return x;}
-
-    public void setX(int x) {this.x = x;}
-
-    public int getY() {return y;}
-
-    public void setY(int y) {this.y = y;}
-
-    public int getWitdh() {return width;}
-
-    public void setWitdh(int witdh) {this.width = witdh;}
-
-    public int getHeight() {return height;}
-
-    public void setHeight(int height) {this.height = height;}
 
     public int getxSpeed() {return xSpeed;}
 
@@ -97,22 +89,6 @@ public abstract class GraphicObject {
     public int getySpeed() {return ySpeed;}
 
     public void setySpeed(int ySpeed) {this.ySpeed = ySpeed;}
-
-    public void moveUP(){this.y -= this.ySpeed;}
-
-    public void moveDown(){this.y += ySpeed;}
-
-    public void moveLeft(){this.x -= this.xSpeed;}
-
-    public void moveRight(){this.x += xSpeed;}
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
 
     public int getLeftBound() {
         return leftBound;
@@ -158,14 +134,59 @@ public abstract class GraphicObject {
 
     public HealthStats getHealthStats(){return this.healthStats;}
 
-    private boolean contains(GraphicObject object){
-        boolean crashesOnXAxis = this.x >= object.x && this.x <= object.x + object.width;
-        boolean crashesOnYAxis = this.y >= object.y && this.y <= object.y + object.height;
-        return crashesOnXAxis || crashesOnYAxis;
+    public int getLeft() {
+        return left;
     }
 
-    public boolean crashes(GraphicObject object){
-        return this.contains(object) || object.contains(this);
+    public void setLeft(int left) {
+        this.left = left;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
+    }
+
+    public int getRight() {
+        return right;
+    }
+
+    public void setRight(int right) {
+        this.right = right;
+    }
+
+    public int getBottom() {
+        return bottom;
+    }
+
+    public void setBottom(int bottom) {
+        this.bottom = bottom;
+    }
+
+    public Point getPoint(){return this.point;}
+
+    public void moveRight(){ this.point.x++;}
+
+    public void moveLeft(){this.point.x--;}
+
+    public void moveDown(){ this.point.y++;}
+
+    public void moveUp(){this.point.y--;}
+
+    public void setShootingCapability(Shooter shootingCapability){this.shootingCapability = shootingCapability;}
+
+    public Shooter getShootingCapability(){return this.shootingCapability;}
+
+    private boolean contains(GraphicObject graphicObject){
+        return (graphicObject.left >= this.left && graphicObject.left <= this.right)
+                &&(graphicObject.top >= this.top && graphicObject.top <= this.bottom);
+    }
+
+    public boolean crashes(GraphicObject graphicObject){
+        return this.contains(graphicObject) || graphicObject.contains(this);
     }
 
 }

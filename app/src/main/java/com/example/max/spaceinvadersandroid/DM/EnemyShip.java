@@ -9,14 +9,15 @@ public class EnemyShip extends GraphicObject {
     private int health,row,column;
     private static int currentRow,currentColumn;
     private boolean lastRow;
-    private Shooter shootCapability;
+
 
     public EnemyShip(EnemyShipBuilder enemyShipBuilder) {
         super(enemyShipBuilder);
         this.health = enemyShipBuilder.health;
         this.row = enemyShipBuilder.row;
         this.column = enemyShipBuilder.column;
-        this.shootCapability = new CantShoot();
+        this.shootingCapability = new CantShoot();
+        this.healthStats = new HasHealth();
     }
 
     public static class EnemyShipBuilder extends GraphicObjectBuilder{
@@ -69,10 +70,6 @@ public class EnemyShip extends GraphicObject {
     public int getHealth() {return health;}
 
     public void setHealth(int health) {this.health = health;}
-
-    public void setShootCapability(Shooter shootCapability){ this.shootCapability = shootCapability;}
-
-    public Shooter getShootCapability(){return this.shootCapability;}
 
     public void setPosition(int row, int column){this.row = row; this.column = column;}
 

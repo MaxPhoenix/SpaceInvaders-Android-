@@ -11,6 +11,8 @@ public class Misile extends GraphicObject {
     public Misile( MisileBuilder misileBuilder) {
         super(misileBuilder);
         this.attackPower = misileBuilder.attackPower;
+        this.shootingCapability = new CantShoot();
+        this.healthStats = new HasntGotHealth();
     }
 
     public static class MisileBuilder extends GraphicObjectBuilder{

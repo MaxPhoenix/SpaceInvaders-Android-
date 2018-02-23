@@ -20,22 +20,20 @@ public class DrawableSpaceShip implements DrawableObject {
 
     public DrawableSpaceShip(SpaceShip spaceShip, int color){
         this.spaceShip = spaceShip;
-        int x = this.spaceShip.getX();
-        int y = this.spaceShip.getY();
-        int width = this.spaceShip.getWidth();
-        int height = this.spaceShip.getHeight();
+        int x = this.spaceShip.getLeft();
+        int y = this.spaceShip.getTop();
+        int width = this.spaceShip.getRight();
+        int height = this.spaceShip.getBottom();
         this.rectangle = new Rect(x,y,width,height);
         this.color = color;
     }
 
     @Override
     public void tick() {
-        int x = this.rectangle.centerX();
-        int y = this.rectangle.centerY();
-        this.rectangle.set(x - rectangle.width()/2,
-                y - rectangle.height()/2,
-                x - rectangle.width()/2,
-                y- rectangle.height()/2);
+        int x = this.spaceShip.getPoint().x;
+        int y = this.spaceShip.getPoint().y;
+        this.rectangle.set( x - this.rectangle.width()/2, y - this.rectangle.height()/2,
+                            x + this.rectangle.width()/2, y + this.rectangle.height()/2);
     }
 
     @Override
