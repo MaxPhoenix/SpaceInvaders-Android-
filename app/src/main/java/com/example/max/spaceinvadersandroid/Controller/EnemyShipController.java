@@ -16,7 +16,9 @@ public class EnemyShipController {
     private Boolean [][] shooterShips;
     private int rows, columns;
 
-    public EnemyShipController(){
+    public EnemyShipController(int rows, int columns){
+        this.rows = rows;
+        this.columns = columns;
         this.enemyShipsList = new ArrayList<EnemyShip>();
         this.enemyShipsMatrix = new EnemyShip[rows][columns];
         this.shooterShips = new Boolean [rows][columns];
@@ -34,9 +36,9 @@ public class EnemyShipController {
     public void moveEnemyShipsHorizontally(){
         for(int i = 0; i < this.enemyShipsList.size(); i++){
             EnemyShip enemy = enemyShipsList.get(i);
-            if(enemy.getPoint().x + enemy.getRight()/2 <= enemy.getRigthBound())
+            if(enemy.getPoint().x  <= enemy.getRigthBound())
                 enemy.moveRight();
-            else if(enemy.getPoint().x - enemy.getRight()/2 > enemy.getLeftBound())
+            else if(enemy.getPoint().x  > enemy.getLeftBound())
                 enemy.moveLeft();
         }
     }
@@ -44,20 +46,22 @@ public class EnemyShipController {
     public void setEnemyShips(int width, int height){
         EnemyShip enemy = null;
         int startY = height / 9; //dibujado de primer fila
+        int bottom = startY + 100;
 
         for(int currentRow = 0; currentRow < rows ; currentRow++) {
             int startX = width / 11; //dibujado de primer columna
 
-            int leftBound = startX - 100; //limite izq. para mov. de naves
-            int rightBound = width / 7;   //limite der. para movimiento de naves
+            int leftBound = startX ; //limite izq. para mov. de naves
+            int rightBound = startX + 150;   //limite der. para movimiento de naves
 
             for (int currentColumn = 0; currentColumn < columns; currentColumn++){
+
                 enemy = (EnemyShip) new EnemyShip.EnemyShipBuilder()
                         .setColumn(currentColumn)
                         .setRow(currentRow)
                         .setHealth(100)
-                        .setRight(100)
-                        .setBottom(100)
+                        .setRight(rightBound)
+                        .setBottom(bottom)
                         .setLeft(startX)
                         .setTop(startY)
                         .setLeftBound(leftBound)
@@ -66,14 +70,22 @@ public class EnemyShipController {
                         .setYSpeed(1)
                         .build();
 
-                rightBound += 100;
+
+                if(currentRow == rows-1){  // si esta en la ultima fila, puede disparar
+                    enemy.setShootingCapability(new ItShoots());
+                }
                 enemyShipsList.add(enemy);
                 enemyShipsMatrix[currentRow][currentColumn] = enemy;
-                startX += 100;
+
+                startX = rightBound + 100 ;
+                leftBound = startX;
+                rightBound = startX + 150;
             }
 
-            startY += 100;
+            startY  =  bottom + 100;
+            bottom = startY + 100;
         }
+
     }
 
     public void moveShipsDown(){
@@ -102,5 +114,9 @@ public class EnemyShipController {
             EnemyShip enemy = enemyShipsList.get(i);
             enemy.increaseYSpeedBy(speed);
         }
+    }
+
+    public ArrayList<EnemyShip> getEnemyShipsList() {
+        return enemyShipsList;
     }
 }

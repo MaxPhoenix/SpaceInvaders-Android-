@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import com.example.max.spaceinvadersandroid.Controller.EnemyShipController;
 import com.example.max.spaceinvadersandroid.Controller.MisileController;
 import com.example.max.spaceinvadersandroid.Controller.PlayerShipController;
+import com.example.max.spaceinvadersandroid.DM.EnemyShip;
+import com.example.max.spaceinvadersandroid.UI.Entities.DrawableEnemyShip;
 import com.example.max.spaceinvadersandroid.UI.Entities.DrawableSpaceShip;
 import com.example.max.spaceinvadersandroid.UI.Entities.Handler;
 import com.example.max.spaceinvadersandroid.UI.GamePanel;
@@ -34,10 +36,11 @@ public class GameState extends State{
         this.width = GamePanel.getScreenWidth();
         this.height = GamePanel.getScreenHeight();
         this.objectsHandler = new Handler();
-        this.enemyShipController = new EnemyShipController();
+        this.enemyShipController = new EnemyShipController(4,4);
         this.misileController = new MisileController();
         this.playerShipController = new PlayerShipController();
 
+        //setting player ship coordinates
         this.playerShipController.setShipCoordinates(
                 this.width/2,
                 (int)(this.height/1.2),
@@ -49,6 +52,14 @@ public class GameState extends State{
 
         this.drawableSpaceShip = new DrawableSpaceShip(playerShipController.getPlayerShip(), Color.rgb(255,0,0));
         this.objectsHandler.addObject(this.drawableSpaceShip);
+
+        this.enemyShipController.setEnemyShips(this.width,this.height);
+        for(EnemyShip enemyShip : enemyShipController.getEnemyShipsList()){
+            DrawableEnemyShip drawableEnemyShip = new DrawableEnemyShip(enemyShip,Color.rgb(0,0,255));
+            objectsHandler.addObject(drawableEnemyShip);
+        }
+
+
     }
 
     @Override

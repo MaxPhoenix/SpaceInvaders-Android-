@@ -20,11 +20,11 @@ public class DrawableSpaceShip implements DrawableObject {
 
     public DrawableSpaceShip(SpaceShip spaceShip, int color){
         this.spaceShip = spaceShip;
-        int x = this.spaceShip.getLeft();
-        int y = this.spaceShip.getTop();
-        int width = this.spaceShip.getRight();
-        int height = this.spaceShip.getBottom();
-        this.rectangle = new Rect(x,y,width,height);
+        int left = this.spaceShip.getLeft();
+        int top = this.spaceShip.getTop();
+        int right = this.spaceShip.getRight();
+        int bottom = this.spaceShip.getBottom();
+        this.rectangle = new Rect(left,top,right,bottom);
         this.color = color;
     }
 
@@ -32,8 +32,15 @@ public class DrawableSpaceShip implements DrawableObject {
     public void tick() {
         int x = this.spaceShip.getPoint().x;
         int y = this.spaceShip.getPoint().y;
-        this.rectangle.set( x - this.rectangle.width()/2, y - this.rectangle.height()/2,
-                            x + this.rectangle.width()/2, y + this.rectangle.height()/2);
+        this.spaceShip.setLeft(x - rectangle.width()/2);
+        this.spaceShip.setTop(y - this.rectangle.height()/2);
+        this.spaceShip.setRight(x + this.rectangle.width()/2);
+        this.spaceShip.setBottom(y + this.rectangle.height()/2);
+        int left = this.spaceShip.getLeft();
+        int top = this.spaceShip.getTop();
+        int right = this.spaceShip.getRight();
+        int bottom = this.spaceShip.getBottom();
+        this.rectangle.set( left, top, right, bottom);
     }
 
     @Override

@@ -65,7 +65,7 @@ public class MainThread extends Thread {
                 averageFPS = 1000/(totaltime/frameCount/1000000);
                 frameCount = 0;
                 totaltime = 0;
-                System.out.println(averageFPS);
+                //System.out.println(averageFPS);
             }
         }
     }
