@@ -1,5 +1,6 @@
 package com.example.max.spaceinvadersandroid.Controller;
 
+import com.example.max.spaceinvadersandroid.DM.Direction;
 import com.example.max.spaceinvadersandroid.DM.EnemyShip;
 import com.example.max.spaceinvadersandroid.DM.ItShoots;
 
@@ -36,12 +37,25 @@ public class EnemyShipController {
     public void moveEnemyShipsHorizontally(){
         for(int i = 0; i < this.enemyShipsList.size(); i++){
             EnemyShip enemy = enemyShipsList.get(i);
-            if(enemy.getPoint().x  <= enemy.getRigthBound())
+            if(enemy.getPoint().x  < enemy.getRigthBound() && enemy.getDirection() == Direction.RIGHT) {
                 enemy.moveRight();
-            else if(enemy.getPoint().x  > enemy.getLeftBound())
+            }
+            else if(enemy.getPoint().x  == enemy.getRigthBound() && enemy.getDirection() == Direction.RIGHT){
                 enemy.moveLeft();
+                enemy.setDirection(Direction.LEFT);
+            }
+            if(enemy.getPoint().x  > enemy.getLeftBound() && enemy.getDirection() == Direction.LEFT) {
+                enemy.moveLeft();
+
+            }
+            else if(enemy.getPoint().x  == enemy.getLeftBound() && enemy.getDirection() == Direction.LEFT){
+                enemy.moveRight();
+                enemy.setDirection(Direction.RIGHT);
+            }
         }
     }
+
+    private void moveShipsRight(){}
 
     public void setEnemyShips(int width, int height){
         EnemyShip enemy = null;

@@ -6,9 +6,12 @@ package com.example.max.spaceinvadersandroid.DM;
 
 public class EnemyShip extends GraphicObject {
 
+
+
     private int health,row,column;
     private static int currentRow,currentColumn;
     private boolean lastRow;
+    private Direction direction;
 
 
     public EnemyShip(EnemyShipBuilder enemyShipBuilder) {
@@ -18,6 +21,7 @@ public class EnemyShip extends GraphicObject {
         this.column = enemyShipBuilder.column;
         this.shootingCapability = new CantShoot();
         this.healthStats = new HasHealth();
+        this.direction = Direction.RIGHT;
     }
 
     public static class EnemyShipBuilder extends GraphicObjectBuilder{
@@ -92,4 +96,8 @@ public class EnemyShip extends GraphicObject {
     public void setLastRow(boolean lastRow) {
         this.lastRow = lastRow;
     }
+
+    public void setDirection(Direction direction) {this.direction = direction;}
+
+    public Direction getDirection() {return direction;}
 }

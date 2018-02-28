@@ -54,14 +54,14 @@ public abstract class GraphicObject {
         }
 
         public GraphicObjectBuilder setXSpeed(int xSpeed){
-            if(xSpeed <= 0)
+            if(xSpeed < 0)
                 throw new IllegalArgumentException("No pueden existitr velocidades negativas de movimiento");
             this.xSpeed = xSpeed;
             return this;
         }
 
         public GraphicObjectBuilder setYSpeed(int ySpeed){
-            if(ySpeed <= 0)
+            if(ySpeed < 0)
                 throw new IllegalArgumentException("No pueden existitr velocidades negativas de movimiento");
             this.ySpeed = ySpeed;
             return this;

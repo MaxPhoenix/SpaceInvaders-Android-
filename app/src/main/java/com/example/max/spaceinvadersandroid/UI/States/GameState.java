@@ -9,7 +9,9 @@ import com.example.max.spaceinvadersandroid.Controller.EnemyShipController;
 import com.example.max.spaceinvadersandroid.Controller.MisileController;
 import com.example.max.spaceinvadersandroid.Controller.PlayerShipController;
 import com.example.max.spaceinvadersandroid.DM.EnemyShip;
+import com.example.max.spaceinvadersandroid.DM.Misile;
 import com.example.max.spaceinvadersandroid.UI.Entities.DrawableEnemyShip;
+import com.example.max.spaceinvadersandroid.UI.Entities.DrawableMisile;
 import com.example.max.spaceinvadersandroid.UI.Entities.DrawableSpaceShip;
 import com.example.max.spaceinvadersandroid.UI.Entities.Handler;
 import com.example.max.spaceinvadersandroid.UI.GamePanel;
@@ -29,7 +31,7 @@ public class GameState extends State{
     private EnemyShipController enemyShipController;
     private PlayerShipController playerShipController;
     private MisileController misileController;
-
+    private long cont;
 
     public GameState(GamePanel gamePanel,String playerName) {
         super(gamePanel);
@@ -60,10 +62,33 @@ public class GameState extends State{
         }
 
 
+
     }
 
     @Override
     public void tick() {
+        this.cont++;
+        this.enemyShipController.moveEnemyShipsHorizontally();
+
+        if(cont % 200 == 0) {
+            for (EnemyShip enemyShip : enemyShipController.getEnemyShipsList()) {
+                this.misileController.launchEnemyMisile(enemyShip);
+            }
+            for (Misile misile : this.misileController.getEnemyMisiles()) {
+                DrawableMisile drawableMisile = new DrawableMisile(misile, Color.rgb(0, 255, 0));
+                objectsHandler.addObject(drawableMisile);
+            }
+
+            this.misileController.launchPlayerMisile(this.playerShipController.getPlayerShip());
+            for(Misile misile : this.misileController.getPlayerBullets()){
+                DrawableMisile drawableMisile = new DrawableMisile(misile, Color.rgb(0,255,0));
+                objectsHandler.addObject(drawableMisile);
+            }
+            this.misileController.moveEnemyBullets();
+            this.misileController.movePlayerBullets();
+        }
+
+
         this.objectsHandler.tick();
     }
 
