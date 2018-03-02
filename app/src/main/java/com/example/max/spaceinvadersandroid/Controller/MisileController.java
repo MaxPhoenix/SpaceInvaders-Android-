@@ -22,15 +22,15 @@ public class MisileController {
     }
 
     public void launchEnemyMisile(EnemyShip enemyShip){
-        int enemyShipXPos = enemyShip.getLeft();
-        int enemyShipYPos = enemyShip.getTop();
+        int enemyShipXPos = enemyShip.getPoint().x;
+        int enemyShipYPos = enemyShip.getPoint().y;
 
         Misile enemyMisile = (Misile) new Misile.MisileBuilder()
                 .setAttackPower(1)
                 .setLeft(enemyShipXPos)
                 .setTop(enemyShipYPos)
-                .setRight(enemyShipXPos + 100)
-                .setBottom(enemyShipYPos+100)
+                .setRight(enemyShipXPos + 20)
+                .setBottom(enemyShipYPos + 20)
                 .setXSpeed(0)
                 .setYSpeed(1)
                 .build();
@@ -39,19 +39,19 @@ public class MisileController {
     }
 
     public void launchPlayerMisile(SpaceShip spaceShip){
-        int spaceShipXPos = spaceShip.getLeft();
-        int spaceShipYPos = spaceShip.getRight();
+        int spaceShipXPos = spaceShip.getPoint().x;
+        int spaceShipYPos = spaceShip.getPoint().y;
 
         Misile spaceShipMisile = (Misile) new Misile.MisileBuilder()
                 .setAttackPower(1)
                 .setLeft(spaceShipXPos)
-                .setRight(spaceShipYPos)
-                .setRight(spaceShipXPos + 100 )
-                .setBottom(spaceShipYPos + 100)
+                .setTop(spaceShipYPos)
+                .setRight(spaceShipXPos + 20)
+                .setBottom(spaceShipYPos + 20)
                 .setXSpeed(0)
                 .setYSpeed(1)
                 .build();
-        spaceShipMisile.setBulletType(BulletType.ENEMY);
+        spaceShipMisile.setBulletType(BulletType.PLAYER);
         playerMisiles.add(spaceShipMisile);
     }
 

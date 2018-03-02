@@ -46,8 +46,8 @@ public class GameState extends State{
         this.playerShipController.setShipCoordinates(
                 this.width/2,
                 (int)(this.height/1.2),
-                this.width/2 + 100,
-                (int)(this.height/1.2)+100
+                this.width/2 +(int)(width / 8.5),
+                (int)(this.height/1.2)+(height/20)
         );
         this.playerShipController.setXAxisLimitBounds(this.width);
         this.playerShipController.setPlayerName(playerName);
@@ -60,8 +60,8 @@ public class GameState extends State{
             DrawableEnemyShip drawableEnemyShip = new DrawableEnemyShip(enemyShip,Color.rgb(0,0,255));
             objectsHandler.addObject(drawableEnemyShip);
         }
-
-
+        System.out.println("width" + this.width);
+        System.out.println("height" + this.height);
 
     }
 
@@ -69,8 +69,10 @@ public class GameState extends State{
     public void tick() {
         this.cont++;
         this.enemyShipController.moveEnemyShipsHorizontally();
+        this.misileController.moveEnemyBullets();
+        this.misileController.movePlayerBullets();
 
-        if(cont % 200 == 0) {
+        if(cont % 100 == 0) {
             for (EnemyShip enemyShip : enemyShipController.getEnemyShipsList()) {
                 this.misileController.launchEnemyMisile(enemyShip);
             }
@@ -84,8 +86,7 @@ public class GameState extends State{
                 DrawableMisile drawableMisile = new DrawableMisile(misile, Color.rgb(0,255,0));
                 objectsHandler.addObject(drawableMisile);
             }
-            this.misileController.moveEnemyBullets();
-            this.misileController.movePlayerBullets();
+
         }
 
 
