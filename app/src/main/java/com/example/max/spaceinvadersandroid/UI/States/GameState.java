@@ -10,10 +10,7 @@ import com.example.max.spaceinvadersandroid.Controller.MisileController;
 import com.example.max.spaceinvadersandroid.Controller.PlayerShipController;
 import com.example.max.spaceinvadersandroid.DM.EnemyShip;
 import com.example.max.spaceinvadersandroid.DM.Misile;
-import com.example.max.spaceinvadersandroid.UI.Entities.DrawableEnemyShip;
-import com.example.max.spaceinvadersandroid.UI.Entities.DrawableMisile;
-import com.example.max.spaceinvadersandroid.UI.Entities.DrawableSpaceShip;
-import com.example.max.spaceinvadersandroid.UI.Entities.Handler;
+import com.example.max.spaceinvadersandroid.UI.Entities.*;
 import com.example.max.spaceinvadersandroid.UI.GamePanel;
 
 /**
@@ -27,6 +24,7 @@ public class GameState extends State{
     //Game objects handler
     private Handler objectsHandler;
     private DrawableSpaceShip drawableSpaceShip;
+    private DrawableObjectFactory drawableObjectFactory;
     //controllers
     private EnemyShipController enemyShipController;
     private PlayerShipController playerShipController;
@@ -41,6 +39,7 @@ public class GameState extends State{
         this.enemyShipController = new EnemyShipController(4,4);
         this.misileController = new MisileController();
         this.playerShipController = new PlayerShipController();
+        this.drawableObjectFactory = new DrawableObjectFactory();
 
         //setting player ship coordinates
         this.playerShipController.setShipCoordinates(
@@ -52,16 +51,14 @@ public class GameState extends State{
         this.playerShipController.setXAxisLimitBounds(this.width);
         this.playerShipController.setPlayerName(playerName);
 
-        this.drawableSpaceShip = new DrawableSpaceShip(playerShipController.getPlayerShip(), Color.rgb(255,0,0));
-        this.objectsHandler.addObject(this.drawableSpaceShip);
+        this.drawableSpaceShip = (DrawableSpaceShip) this.drawableObjectFactory.
+                drawObjectFromEntity(DrawableObjectType.PLAYERSHIP,this.playerShipController.getPlayerShip());
+        this.objectsHandler.addObject(DrawableObjectType.PLAYERSHIP,this.playerShipController.getPlayerShip());
 
         this.enemyShipController.setEnemyShips(this.width,this.height);
         for(EnemyShip enemyShip : enemyShipController.getEnemyShipsList()){
-            DrawableEnemyShip drawableEnemyShip = new DrawableEnemyShip(enemyShip,Color.rgb(0,0,255));
-            objectsHandler.addObject(drawableEnemyShip);
+            objectsHandler.addObject(DrawableObjectType.ENEMYSHIP,enemyShip);
         }
-        System.out.println("width" + this.width);
-        System.out.println("height" + this.height);
 
     }
 
@@ -72,23 +69,22 @@ public class GameState extends State{
         this.misileController.moveEnemyBullets();
         this.misileController.movePlayerBullets();
 
+        this.misileController.enemyMisileCrash(this.playerShipController.getPlayerShip());
+        this.misileController.removeMisilesOutOfSight(this.height);
+        this.misileController.removeInactiveMisilies();
+        this.objectsHandler.clearInactiveObjects();
+
+
+
         if(cont % 100 == 0) {
             for (EnemyShip enemyShip : enemyShipController.getEnemyShipsList()) {
-                this.misileController.launchEnemyMisile(enemyShip);
-            }
-            for (Misile misile : this.misileController.getEnemyMisiles()) {
-                DrawableMisile drawableMisile = new DrawableMisile(misile, Color.rgb(0, 255, 0));
-                objectsHandler.addObject(drawableMisile);
+                Misile misile = this.misileController.launchEnemyMisile(enemyShip);
+                objectsHandler.addObject(DrawableObjectType.MISILE,misile);
             }
 
-            this.misileController.launchPlayerMisile(this.playerShipController.getPlayerShip());
-            for(Misile misile : this.misileController.getPlayerBullets()){
-                DrawableMisile drawableMisile = new DrawableMisile(misile, Color.rgb(0,255,0));
-                objectsHandler.addObject(drawableMisile);
-            }
-
+            Misile misile = this.misileController.launchPlayerMisile(this.playerShipController.getPlayerShip());
+            objectsHandler.addObject(DrawableObjectType.MISILE,misile);
         }
-
 
         this.objectsHandler.tick();
     }

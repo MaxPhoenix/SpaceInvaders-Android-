@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
 
+import com.example.max.spaceinvadersandroid.DM.ActiveState;
 import com.example.max.spaceinvadersandroid.DM.GraphicObject;
 import com.example.max.spaceinvadersandroid.DM.SpaceShip;
 
@@ -30,6 +31,12 @@ public class DrawableSpaceShip implements DrawableObject {
 
     @Override
     public void tick() {
+        if(this.spaceShip == null)
+            return;
+        if(this.spaceShip.getActiveState() == ActiveState.INACTIVE){
+            this.spaceShip = null;
+            return;
+        }
         int x = this.spaceShip.getPoint().x;
         int y = this.spaceShip.getPoint().y;
         this.spaceShip.setLeft(x - rectangle.width()/2);
@@ -45,6 +52,8 @@ public class DrawableSpaceShip implements DrawableObject {
 
     @Override
     public void render(Canvas canvas) {
+        if(this.spaceShip == null)
+            return;
         Paint paint = new Paint();
         paint.setColor(this.color);
         canvas.drawRect(this.rectangle,paint);

@@ -59,6 +59,13 @@ public class PlayerShipController {
         this.playerShip.setRight(width);
         this.playerShip.setBottom(height);
         this.playerShip.setxSpeed(1);
+        this.playerShip = (SpaceShip) new SpaceShip.SpaceShipBuilder()
+                            .setLeft(x)
+                            .setTop(y)
+                            .setRight(width)
+                            .setBottom(height)
+                            .build();
+        this.playerShip.getHealthStats().setHealth(100);
         this.playerShip.getPoint().set((this.playerShip.getLeft() + this.playerShip.getRight()) /2,(this.playerShip.getTop() + this.playerShip.getBottom()) /2);
     }
 

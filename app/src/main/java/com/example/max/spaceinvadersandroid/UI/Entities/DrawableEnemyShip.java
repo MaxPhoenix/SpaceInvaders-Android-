@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.max.spaceinvadersandroid.DM.ActiveState;
 import com.example.max.spaceinvadersandroid.DM.EnemyShip;
 import com.example.max.spaceinvadersandroid.DM.SpaceShip;
 
@@ -28,6 +29,12 @@ public class DrawableEnemyShip implements DrawableObject {
 
     @Override
     public void tick() {
+        if(this.enemyShip == null)
+            return;
+        if(this.enemyShip.getActiveState() == ActiveState.INACTIVE){
+            this.enemyShip = null;
+            return ;
+        }
         int x = this.enemyShip.getPoint().x;
         int y = this.enemyShip.getPoint().y;
         this.enemyShip.setLeft(x - rectangle.width()/2);
@@ -43,6 +50,8 @@ public class DrawableEnemyShip implements DrawableObject {
 
     @Override
     public void render(Canvas canvas) {
+        if(this.enemyShip == null)
+            return;
         Paint paint = new Paint();
         paint.setColor(this.color);
         canvas.drawRect(this.rectangle,paint);

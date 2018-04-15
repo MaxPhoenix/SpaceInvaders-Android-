@@ -12,6 +12,7 @@ public abstract class GraphicObject {
     protected HealthStats healthStats;
     protected Shooter shootingCapability;
     protected Point point;
+    protected ActiveState activeState;
 
     public GraphicObject(){
         this.point = new Point();
@@ -27,6 +28,7 @@ public abstract class GraphicObject {
         this.rigthBound = graphicObjectBuilder.rightBound;
         this.leftBound = graphicObjectBuilder.leftBound;
         this.point = new Point((this.left + this.right) /2,(this.top + this.bottom) /2);
+        this.activeState = ActiveState.ACTIVE;
     }
 
     public static abstract class GraphicObjectBuilder {
@@ -189,4 +191,7 @@ public abstract class GraphicObject {
         return this.contains(graphicObject) || graphicObject.contains(this);
     }
 
+    public ActiveState getActiveState() { return activeState; }
+
+    public void setActiveState(ActiveState activeState) { this.activeState = activeState; }
 }

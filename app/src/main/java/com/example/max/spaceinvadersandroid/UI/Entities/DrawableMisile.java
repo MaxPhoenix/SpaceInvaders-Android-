@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.max.spaceinvadersandroid.DM.ActiveState;
 import com.example.max.spaceinvadersandroid.DM.Misile;
 import com.example.max.spaceinvadersandroid.DM.SpaceShip;
 
@@ -29,6 +30,13 @@ public class DrawableMisile implements DrawableObject {
 
     @Override
     public void tick() {
+        if(this.misile == null)
+            return ;
+        if(this.misile.getActiveState() == ActiveState.INACTIVE){
+            this.misile = null;
+            return;
+        }
+
         int x = this.misile.getPoint().x;
         int y = this.misile.getPoint().y;
         this.misile.setLeft(x - rectangle.width()/2);
@@ -44,6 +52,8 @@ public class DrawableMisile implements DrawableObject {
 
     @Override
     public void render(Canvas canvas) {
+        if(this.misile == null)
+            return ;
         Paint paint = new Paint();
         paint.setColor(this.color);
         canvas.drawRect(this.rectangle,paint);

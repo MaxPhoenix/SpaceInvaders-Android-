@@ -14,6 +14,7 @@ public class SpaceShip extends GraphicObject {
         this.setHealthStats(new HasHealth());
         this.healthStats.setHealth(100);
         this.shootingCapability = new ItShoots();
+        this.healthStats = new HasHealth();
     }
 
     public static class SpaceShipBuilder extends GraphicObjectBuilder{
@@ -26,7 +27,26 @@ public class SpaceShip extends GraphicObject {
 
     public int getHealth() {return this.healthStats.getHealth();}
 
-    public void reduceHealthBy(int health) {this.healthStats.setHealth (- health);}
+    @Override
+    public String toString() {
+        return "SpaceShip{" +
+                "left=" + left +
+                ", top=" + top +
+                ", right=" + right +
+                ", bottom=" + bottom +
+                ", xSpeed=" + xSpeed +
+                ", ySpeed=" + ySpeed +
+                ", leftBound=" + leftBound +
+                ", rigthBound=" + rigthBound +
+                ", healthStats=" + healthStats +
+                ", shootingCapability=" + shootingCapability +
+                ", point=" + point +
+                ", activeState=" + activeState +
+                '}';
+    }
+
+    public void reduceHealthBy(int health) {
+        this.healthStats.setHealth (- health);}
 
 
 }

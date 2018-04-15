@@ -1,9 +1,6 @@
 package com.example.max.spaceinvadersandroid.Controller;
 
-import com.example.max.spaceinvadersandroid.DM.BulletType;
-import com.example.max.spaceinvadersandroid.DM.EnemyShip;
-import com.example.max.spaceinvadersandroid.DM.Misile;
-import com.example.max.spaceinvadersandroid.DM.SpaceShip;
+import com.example.max.spaceinvadersandroid.DM.*;
 
 import java.util.ArrayList;
 
@@ -21,7 +18,7 @@ public class MisileController {
         playerMisiles = new ArrayList<Misile>();
     }
 
-    public void launchEnemyMisile(EnemyShip enemyShip){
+    public Misile launchEnemyMisile(EnemyShip enemyShip){
         int enemyShipXPos = enemyShip.getPoint().x;
         int enemyShipYPos = enemyShip.getPoint().y;
 
@@ -36,9 +33,10 @@ public class MisileController {
                 .build();
         enemyMisile.setBulletType(BulletType.ENEMY);
         enemyMisiles.add(enemyMisile);
+        return enemyMisile;
     }
 
-    public void launchPlayerMisile(SpaceShip spaceShip){
+    public Misile launchPlayerMisile(SpaceShip spaceShip){
         int spaceShipXPos = spaceShip.getPoint().x;
         int spaceShipYPos = spaceShip.getPoint().y;
 
@@ -53,12 +51,14 @@ public class MisileController {
                 .build();
         spaceShipMisile.setBulletType(BulletType.PLAYER);
         playerMisiles.add(spaceShipMisile);
+        return spaceShipMisile;
     }
 
     public void enemyMisileCrash(SpaceShip spaceShip){
         for(int i = 0; i < enemyMisiles.size(); i++) {
-            if (enemyMisiles.get(i).crashes(spaceShip)) {
-                enemyMisiles.remove(enemyMisiles.get(i));
+            if (enemyMisiles.get(i).crashes(spaceShip)) {System.out.println(spaceShip);
+                spaceShip.reduceHealthBy(enemyMisiles.get(i).getAttackPower());
+                enemyMisiles.get(i).setActiveState(ActiveState.INACTIVE);
             }
         }
     }
@@ -66,7 +66,21 @@ public class MisileController {
     public void playerMisileCrash(EnemyShip enemyShip){
         for(int i = 0; i < playerMisiles.size(); i++) {
             if (playerMisiles.get(i).crashes(enemyShip)) {
-                playerMisiles.remove(playerMisiles.get(i));
+                enemyShip.reduceHealthBy(playerMisiles.get(i).getAttackPower());
+                playerMisiles.get(i).setActiveState(ActiveState.INACTIVE);
+            }
+        }
+    }
+
+    public void removeMisilesOutOfSight(int height){
+        for(int i = 0; i < enemyMisiles.size(); i++) {
+            if (enemyMisiles.get(i).getBottom() > height) {
+                enemyMisiles.get(i).setActiveState(ActiveState.INACTIVE);
+            }
+        }
+        for(int i = 0; i < playerMisiles.size(); i++) {
+            if (playerMisiles.get(i).getTop() < height) {
+                playerMisiles.get(i).setActiveState(ActiveState.INACTIVE);
             }
         }
     }
@@ -104,4 +118,23 @@ public class MisileController {
     public ArrayList<Misile> getPlayerBullets(){return this.playerMisiles;}
 
     public ArrayList<Misile> getEnemyMisiles(){ return this.enemyMisiles;}
+
+    public void removeInactiveMisilies(){
+        ArrayList<Misile> newPlayerMisiles = new ArrayList<>();
+        ArrayList<Misile> newEnemyMisiles = new ArrayList<>();
+
+        for(Misile misile : this.playerMisiles){
+            if(misile.getActiveState() == ActiveState.ACTIVE){
+                newPlayerMisiles.add(misile);
+            }
+        }
+
+        for(Misile misile : this.enemyMisiles){
+            if(misile.getActiveState() == ActiveState.ACTIVE){
+                newEnemyMisiles.add(misile);
+            }
+        }
+        this.playerMisiles = newPlayerMisiles;
+        this.enemyMisiles = newEnemyMisiles;
+    }
 }

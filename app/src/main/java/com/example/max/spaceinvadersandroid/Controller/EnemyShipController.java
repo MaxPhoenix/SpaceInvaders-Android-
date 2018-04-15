@@ -59,14 +59,14 @@ public class EnemyShipController {
 
     public void setEnemyShips(int width, int height){
         EnemyShip enemy = null;
-        int startY = height / 20; //dibujado de primer fila
-        int bottom = startY + (height/20);
+        int startY = height / 15; //dibujado de primer fila
+        int bottom = startY + (height/15);
 
         for(int currentRow = 0; currentRow < rows ; currentRow++) {
-            int startX = width / 11; //dibujado de primer columna
+            int startX = width / 4; //dibujado de primer columna
 
             int leftBound = startX ; //limite izq. para mov. de naves
-            int rightBound = startX + (int)(width / 8.5);   //limite der. para movimiento de naves
+            int rightBound = startX + (int)(width / 15);   //limite der. para movimiento de naves
 
             for (int currentColumn = 0; currentColumn < columns; currentColumn++){
 
@@ -91,13 +91,13 @@ public class EnemyShipController {
                 enemyShipsList.add(enemy);
                 enemyShipsMatrix[currentRow][currentColumn] = enemy;
 
-                startX = rightBound + (int)(width / 8.5) ;
+                startX = rightBound + (int)(width / 15) ;
                 leftBound = startX;
-                rightBound = startX + (int)(width / 8.5);
+                rightBound = startX + (int)(width / 15);
             }
 
-            startY  =  bottom + (height/20);
-            bottom = startY + (height/20);
+            startY  =  bottom + (height/15);
+            bottom = startY + (height/15);
         }
 
     }
@@ -133,4 +133,7 @@ public class EnemyShipController {
     public ArrayList<EnemyShip> getEnemyShipsList() {
         return enemyShipsList;
     }
+
+
+
 }

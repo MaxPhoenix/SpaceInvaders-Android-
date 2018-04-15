@@ -70,6 +70,7 @@ public class EnemyShip extends GraphicObject {
         if(currentColumn > 4)
             currentColumn =0;
     }
+    public void reduceHealthBy(int health) {this.healthStats.setHealth (- health);}
 
     public int getHealth() {return health;}
 
